@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>San Valentín 💕</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffd6e8, #fff0f6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      color: #ff4d88;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .emoji {
+      font-size: 3rem;
+      margin-bottom: 30px;
+    }
+
+    /* ÁREA DE JUEGO */
+    .play-area {
+      position: relative;
+      width: 100%;
+      height: 250px;
+    }
+
+    button {
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: absolute;
+    }
+
+    /* BOTÓN SÍ (FIJO) */
+    #yesBtn {
+      background-color: #ff4d88;
+      color: white;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      box-shadow: 0 8px 20px rgba(255,77,136,0.4);
+      z-index: 10;
+    }
+
+    /* BOTÓN NO (INICIAL FIJO) */
+    #noBtn {
+      background-color: #ffe3ed;
+      color: #ff4d88;
+      left: 50%;
+      top: 20px;
+      transform: translateX(-50%);
+    }
+
+    .message {
+      display: none;
+      font-family: 'Pacifico', cursive;
+      color: #ff4d88;
+      font-size: 2rem;
+    }
+
+    .sub {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      margin-top: 10px;
+    }
+
+    .heart {
+      position: fixed;
+      font-size: 20px;
+      animation: float 4s linear infinite;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container" id="main">
+    <h1>¿Quieres ser mi San Valentín?</h1>
+    <div class="emoji">💕</div>
+
+    <div class="play-area">
+      <button id="noBtn">No 😶</button>
+      <button id="yesBtn">Sí 💖</button>
+    </div>
+  </div>
+
+  <div class="container message" id="loveMessage">
+    <div>Sabía que dirías que sí 💕</div>
+    <div class="sub">Te amo. Eres mi persona favorita.</div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const main = document.getElementById("main");
+    const loveMessage = document.getElementById("loveMessage");
+
+    let scale = 1;
+    let phrases = ["¿Segura? 😶", "Inténtalo otra vez 👀", "No creo 😏"];
+    let index = 0;
+
+    noBtn.addEventListener("click", () => {
+      scale -= 0.1;
+      if (scale < 0.4) scale = 0.4;
+      noBtn.style.transform = `translateX(0) scale(${scale})`;
+
+      // área segura (NO invade el SÍ)
+      const x = Math.random() * 220 + 20;
+      const y = Math.random() * 120 + 10;
+
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+
+      noBtn.innerText = phrases[index];
+      index = (index + 1) % phrases.length;
+    });
+
+    yesBtn.addEventListener("click",
